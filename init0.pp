@@ -47,7 +47,7 @@ ensure => running,
 require => Package['nrpe'],
 }
 
-package { 'nagios-plugins':
+package { 'nagios-plugins-all':
 ensure => present,
 }
 
