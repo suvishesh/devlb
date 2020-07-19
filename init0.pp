@@ -34,7 +34,7 @@ require => Exec['build'],
 
 class nrpe {
 	
-exec { 'epel-release'
+exec { 'epel-release':
 command => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
 }
 
