@@ -36,7 +36,7 @@ class nrpe {
 	
 exec { 'epel-release':
 command => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
-unless => 'yum list installed | grep epel-release 2>/dev/null',
+unless => '/bin/yum list installed | grep epel-release 2>/dev/null',
 }
 
 package { 'nrpe':
