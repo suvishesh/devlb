@@ -31,13 +31,25 @@ command => '/bin/docker run -it -d -p 82:80 -d website',
 require => Exec['build'],
 }
 }
+
 class nrpe {
 	
+exec { 'epel-release'
+commnad => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
+}
+
 package { 'nrpe':
 ensure => present,
+require => Exec['epel-release'],
 }
 service { 'nrpe':
 ensure => running,
 require => Package['nrpe'],
 }
+
+package { 'nagios-plugins':
+ensure => present,
+require => Exec['epel-release'],
+}
+
 }
