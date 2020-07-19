@@ -36,11 +36,11 @@ class nrpe {
 	
 exec { 'epel-release':
 command => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
+
 }
 
 package { 'nrpe':
 ensure => present,
-require => Exec['epel-release'],
 }
 service { 'nrpe':
 ensure => running,
@@ -49,7 +49,6 @@ require => Package['nrpe'],
 
 package { 'nagios-plugins':
 ensure => present,
-require => Exec['epel-release'],
 }
 
 }
