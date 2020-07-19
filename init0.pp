@@ -31,4 +31,13 @@ command => '/bin/docker run -it -d -p 82:80 -d website',
 require => Exec['build'],
 }
 }
-
+class nrpe {
+	
+package { 'nrpe':
+ensure => present,
+}
+service { 'nrpe':
+ensure => running,
+require => Package['nrpe'],
+}
+}
