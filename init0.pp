@@ -83,7 +83,7 @@ ensure => running,
 require => Package['xinetd'],
 }
 exec { 'cmkagent':
-command => '/bin/yum install -y http://52.14.22.13/dockmon/check_mk/agents/check-mk-agent-1.5.0p24-1.noarch.rpm'
+command => '/bin/yum install -y http://52.14.22.13/dockmon/check_mk/agents/check-mk-agent-1.5.0p24-1.noarch.rpm',
 unless => '/bin/yum list installed | grep check-mk-agent 2>/dev/null'
 }
 }
