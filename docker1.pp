@@ -1,7 +1,7 @@
 node default {
 
 include docker
-include nrpe
+include checkmk
 
  }
 
