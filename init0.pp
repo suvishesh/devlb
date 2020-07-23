@@ -42,31 +42,7 @@ exec { 'run':
 command => '/bin/docker run -it -d -p 82:80 -d website',
 require => Exec['build'],
 }
-
-
 }
-
-/*class nrpe {
-
-exec { 'epel-release':
-command => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
-unless => '/bin/yum list installed | grep epel-release 2>/dev/null',
-}
-
-package { 'nrpe':
-ensure => present,
-}
-service { 'nrpe':
-ensure => running,
-require => Package['nrpe'],
-}
-
-package { 'nagios-plugins-all':
-ensure => present,
-}
-
-}
-*/
 
 
 class checkmk {
