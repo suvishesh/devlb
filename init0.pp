@@ -76,7 +76,7 @@ command => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-relea
 unless => '/bin/yum list installed | grep epel-release 2>/dev/null',
 }	
 package { 'xinetd':
-ensure = > present,
+ensure => present,
 }
 service { 'xinetd':
 ensure => running,
