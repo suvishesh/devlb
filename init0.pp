@@ -75,7 +75,7 @@ exec { 'epel-release':
 command => '/bin/yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm',
 unless => '/bin/yum list installed | grep epel-release 2>/dev/null',
 }	
-package { 'xinetd'
+package { 'xinetd':
 ensure = > present,
 }
 service { 'xinetd':
