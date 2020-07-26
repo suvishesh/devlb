@@ -31,14 +31,14 @@ command => '/bin/docker rm -f $(sudo docker ps -a -q)',
 #unless => '/bin/docker ps | grep website 1>/dev/null',
 #notify => Exec['build'],
 onlyif => '/bin/docker ps | grep website',
-#try_sleep => 30,
 }
 
 exec { 'build':
-try_sleep => 30,
 command => '/bin/docker build /root -t website',
 #require => Exec['rm'],
 #onlyif => '/bin/docker ps | grep website'
+tries => 2,
+try_sleep => 30,
 }
 exec { 'run':
 command => '/bin/docker run -it -d -p 82:80 -d website',
