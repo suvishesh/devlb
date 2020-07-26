@@ -34,7 +34,7 @@ onlyif => '/bin/docker ps | grep website'
 }
 
 exec { 'build':
-command => '/bin/docker build . -t website',
+command => '/bin/docker build /root -t website',
 #require => Exec['rm'],
 #onlyif => '/bin/docker ps | grep website'
 }
@@ -59,7 +59,7 @@ ensure => running,
 require => Package['xinetd'],
 }
 exec { 'cmkagent':
-command => '/bin/yum install -y http://18.217.172.107/dockmon/check_mk/agents/check-mk-agent-1.5.0p24-1.noarch.rpm',
+command => '/bin/yum install -y http://18.217.138.35/dockmon/check_mk/agents/check-mk-agent-1.5.0p24-1.noarch.rpm',
 unless => '/bin/yum list installed | grep check-mk-agent 2>/dev/null'
 }
 }
