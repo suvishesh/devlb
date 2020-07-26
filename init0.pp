@@ -23,7 +23,6 @@ file { "/root/index.html":
         owner => 'root',
         group => 'root',
         source => 'puppet:///modules/docker/index.html',
-        try_sleep => 30,
     }
 
 exec { 'rm':
@@ -36,6 +35,7 @@ onlyif => '/bin/docker ps | grep website',
 }
 
 exec { 'build':
+try_sleep => 30,
 command => '/bin/docker build /root -t website',
 #require => Exec['rm'],
 #onlyif => '/bin/docker ps | grep website'
