@@ -34,11 +34,11 @@ onlyif => '/bin/docker ps | grep website',
 }
 
 exec { 'build':
-tries => 2,
+tries => 3,
 command => '/bin/docker build /root -t website',
 #require => Exec['rm'],
 #onlyif => '/bin/docker ps | grep website'
-try_sleep => 10,
+try_sleep => 30,
 }
 exec { 'run':
 command => '/bin/docker run -it -d -p 82:80 -d website',
