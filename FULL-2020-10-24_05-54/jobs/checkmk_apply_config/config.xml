@@ -1,0 +1,44 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>1. adds host entry in /etc/hosts&#xd;
+2. fetches the list of ip&apos;s from hostname file and apply host config to checkmk&#xd;
+</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>checkmk</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>hostname
+
+
+
+rsync -a root@3.22.237.100:/nodename/hostnames /pupmas
+sleep 2s
+cat /pupmas/hostnames &gt; /etc/hosts
+sleep 2s
+rm -vf /opt/omd/sites/dockmon/etc/check_mk/main.mk
+sleep 2s
+echo &quot;all_hosts = [ $(for i  in $(cat /pupmas/hostnames| grep puppet | awk &apos;{print $2}&apos;); do echo &quot;\&quot;$i\&quot;,&quot;; done)&quot; ]&quot;&quot; &gt; /opt/omd/sites/dockmon/etc/check_mk/main.mk
+sleep 2s
+chown dockmon:dockmon /opt/omd/sites/dockmon/etc/check_mk/main.mk
+sleep 2s
+su -c &apos;cmk --update-dns-cache&apos; - dockmon
+sleep 2s
+su -c &apos;cmk -I&apos; - dockmon
+sleep 5s
+su -c &apos;cmk -O&apos; - dockmon
+sleep 5s
+su -c &apos;cmk -R&apos; - dockmon</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

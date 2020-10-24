@@ -1,0 +1,58 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>deploy httpd from puppet master to puppet agents</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.3.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/suvishesh/projectdev.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <assignedNode>puppetmaster</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.31.0">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>hostname -i
+mv -f /jenkins/workspace/deplyhttpd/Dockerfile /etc/puppet/modules/docker/files/
+mv -f /jenkins/workspace/deplyhttpd/index.html /etc/puppet/modules/docker/files/
+mv -f /jenkins/workspace/deplyhttpd/docker1.pp /etc/puppet/manifests/
+mv -f /jenkins/workspace/deplyhttpd/init0.pp /etc/puppet/modules/docker/manifests
+
+
+mv /etc/puppet/modules/docker/manifests/init.pp /etc/puppet/modules/docker/manifests/init.pp.bak
+sleep 5
+mv /etc/puppet/modules/docker/manifests/init0.pp /etc/puppet/modules/docker/manifests/init.pp
+mv /etc/puppet/manifests/site.pp /etc/puppet/manifests/site.pp.bak
+sleep 5
+mv /etc/puppet/manifests/docker1.pp /etc/puppet/manifests/site.pp</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>
